@@ -217,26 +217,13 @@ void incFornecedor (struct Fornecedor S[], int contS, struct Fornecedor T[], int
     contA = k;
 }
 
-void mostrarIncForn (struct Fornecedor A[], int contA){
-    cout << "\n\nLista dos Registros no Arquivo Atualizado" << endl;
-    for (int i = 0; i < contA; i++){
-        cout << "\nCodigo: " << A[i].idFornecedor;
-        cout << "\tNome: " << A[i].nomeFornecedor;
-        cout << "\tEndereco: " << A[i].endereco;
-        cout << "\tTelefone: " << A[i].telefone;
-        cout << "\tCidade: " << A[i].cidade;
-        cout << "\tUF: " << A[i].idUF;
-        cout << "\tCNPJ: " << A[i].cnpj;
-    }
-    getch();
-}
 
 //Fim da inclusão Fornecedor
 
 //Inicio da inclusão Produto
 
-void buscaProd (struct Produto prod[], int codP);
-void buscaForn (struct Fornecedor forn[], int codF);
+int buscaProduto (struct Produto prod[], int codP);
+void buscaFornecedor (struct Fornecedor forn[], int codF);
 
 void novoProd (struct Fornecedor forn[], struct Produto prod[], struct Produto nProd[], int &contadorP){
 	int i =0;
@@ -246,7 +233,7 @@ void novoProd (struct Fornecedor forn[], struct Produto prod[], struct Produto n
 		int codP;
 		codP = nProd[i].idProduto;
 		if (codP > 0){
-		buscaProd (prod, codP);
+		buscaProduto (prod, codP);
 		cout << "Descrição: ";
 		cin.ignore(); 
 		gets(nProd[i].descProd);
@@ -256,7 +243,7 @@ void novoProd (struct Fornecedor forn[], struct Produto prod[], struct Produto n
 		cin >> nProd[i].codFornecedor;
 		int codF;
 		codF = nProd[i].codFornecedor;
-		buscaForn(forn, codF);
+		buscaFornecedor (forn, codF);
 		cout << "Quantidade do Estoque: ";
 		cin >> nProd[i].qtdeEstoque;
 		cout << "Estoque Mínimo: ";
@@ -272,7 +259,7 @@ void novoProd (struct Fornecedor forn[], struct Produto prod[], struct Produto n
   contadorP = i - 1;
 }
 
-int buscaProd (struct Produto prod[], int &codP){
+int buscaProduto (struct Produto prod[], int &codP){
 	int i = 0, f = 4;
 	int m = (i+f) / 2;
 	for (; f >= i && codP != prod[m].idProduto; m = (i+f)/2){
@@ -286,7 +273,7 @@ int buscaProd (struct Produto prod[], int &codP){
 		getch();
 	} 
 	else 
-		return -1;		
+		return -1;
 }
 
 void buscaFornecedor (struct Fornecedor forn[], int codF){
@@ -357,7 +344,7 @@ void incProduto (struct Produto S[], int contS, struct Produto T[], int contT, s
     contA = k;
 }
 
-void mostrarIncProd (struct Produto A[], int contA){
+void mostrarIncProd (struct Produto A[], int &contA){
     cout << "\n\nLista dos Registros no Arquivo Atualizado" << endl;
     for (int i = 0; i < contA; i++){
         cout << "\nCodigo: " << A[i].idProduto;
@@ -373,6 +360,64 @@ void mostrarIncProd (struct Produto A[], int contA){
 }
 
 //Fim da inclusão Produto
+
+//Inicio Venda
+
+//int buscaVendaProd (struct Produto prod[], int &codVp){
+//	int i = 0, f = 4;
+//	int m = (i + f) / 2;
+//	for (; f >= i && codVp != prod[m].idProduto; m = (i + f) / 2){
+//		if(codVp > prod[m].idProduto)
+//			i = m + 1;
+//		else 
+//			m = i - 1;
+//	}
+//	
+//	if (codVp == prod[m].idProduto){
+//		cout << "Descrição do Produto: " << prod[m].descProd << endl;
+//		cout << "Quantidade em Estoque: " << prod[m].qtdeEstoque << endl;
+//		cout << "Valor Unitário: " << prod[m].valorUnt << endl;
+//	}
+//	else
+//		return -1;
+//}
+//
+//int buscaVendaTipo (struct TipoProduto tipo[], int &codTp){
+//	int i = 0, f = 4;
+//	int m = (i + f) / 2;
+//	for (; f >= i && codTp != tipo[m].idTipo; m = (i + f) / 2){
+//		if(codTp > tipo[m].idTipo)
+//			i = m + 1;
+//		else 
+//			m = i - 1;
+//	}
+//	
+//	if (codTp == tipo[m].idTipo)
+//		cout << "Descrição Tipo do Produto: " << tipo[m].descTipo;
+//	else
+//		return -1;
+//}
+
+
+
+//Fim Venda
+
+//Inicio Mostrar
+
+void mostrarIncForn (struct Fornecedor A[], int &contA){
+    cout << "\n\nLista dos Registros no Arquivo Atualizado" << endl;
+    for (int i = 0; i < contA; i++){
+        cout << "\nCodigo: " << A[i].idFornecedor;
+        cout << "\tNome: " << A[i].nomeFornecedor;
+        cout << "\tEndereco: " << A[i].endereco;
+        cout << "\tTelefone: " << A[i].telefone;
+        cout << "\tCidade: " << A[i].cidade;
+        cout << "\tUF: " << A[i].idUF;
+        cout << "\tCNPJ: " << A[i].cnpj;
+    }
+    getch();
+}
+//Fim Mostrar
 
 int main() {
 	setlocale(LC_ALL,"");
@@ -393,7 +438,7 @@ int main() {
 		cout << "\t\t1 - Cadastrar\n" << endl;
 		cout << "\t\t2 - Inserir\n" << endl;
 		cout << "\t\t3 - Vender\n" << endl;
-		cout << "\t\t4 - Mostrar\n" << endl;
+		cout << "\t\t4 - Mostrar\n\n" << endl;
 		cout << "\t\t5 - Sair" << endl;
 	
 		cout << "\n\nEscolha a opção: ";
@@ -451,7 +496,7 @@ int main() {
 
 					case 5:
 						system("cls");
-						cout << "Voltando.\n\n\n";
+						cout << "Voltando...\n\n\n";
 						break;
 					
 					default:
@@ -500,32 +545,31 @@ int main() {
 			   				system("cls");
 			   			
 			   				incFornecedor(fornS, contS, fornT, contT, fornA, contA);
-			   				mostrarIncForn(fornA, contA);
 			   				system("pause");
 			   				break;
 			   				
 			   			case 2:
-			   				struct Produto prodS[4], prodT[4], prodA[8];
-			   				int contpS, contpT, contpA;
-			   				
-			   				system("cls");
-			   				cout << "\t\t\tInclusão de Produto\n\n" << endl;
-			   				
-			   				cout << "\nLeitura Arquivo S";
-			   				novoProd (arqForn, arqProd, prodS, contpS);
-			   				system ("cls");
-			   				
-			   				cout << "\nLeitura Arquivo T";
-			   				novoProd (arqForn, arqProd, prodT, contpT);
-			   				system("cls");
-			   				
-			   				incProduto(prodS, contpS, prodT, contpT, prodA, contpA);
-			   				mostrarIncProd (prodA, contpA);
+//			   				struct Produto prodS[4], prodT[4], prodA[8];
+//			   				int contpS, contpT, contpA;
+//			   				
+//			   				system("cls");
+//			   				cout << "\t\t\tInclusão de Produto\n\n" << endl;
+//			   				
+//			   				cout << "\nLeitura Arquivo S";
+//			   				novoProd (arqForn, arqProd, prodS, contpS);
+//			   				system ("cls");
+//			   				
+//			   				cout << "\nLeitura Arquivo T";
+//			   				novoProd (arqForn, arqProd, prodT, contpT);
+//			   				system("cls");
+//			   				
+//			   				incProduto(prodS, contpS, prodT, contpT, prodA, contpA);
+//			   				mostrarIncProd (prodA, contpA);
 			   				break;
 			   				
 			   			case 3:
 			   				system("cls");
-			   				cout << "Voltando.\n\n\n";
+			   				cout << "Voltando...\n\n\n";
 			   				break;
 			   				
 			   			default:
@@ -544,13 +588,75 @@ int main() {
 			  system("cls");
 			  cout << "\t\tVenda do Produto\n\n";
 			  
+			  al = 0;
 			  break; 
 			
 			
 			case 4:  
-			   system("cls"); 
-			   cout << "\t\tMostrar os Registros\n\n";
+			   system("cls");
 			   
+			   int al4;
+			   while (al4 != 4)
+			   {
+			   		system("cls");
+			   		cout << "\t\tConsultar os Registros\n\n";
+			   		cout << "\t\t1 - Inclusão Fornecedor" << endl;
+			   		cout << "\t\t2 - Inclusão Produtos" << endl;
+			   		cout << "\t\t3 - Estoque Abaixo do Mínimo" << endl;
+			   		
+			   		cout << "\n\t\t4 - Voltar";
+			   		
+			   		cout << "\n\nEscolha uma opção: ";
+			   		cin >> al4;
+			   		
+			   		switch (al4)
+			   		{
+			   			case 1:
+			   				struct Fornecedor fornS[4], fornT[4], fornA[8];
+			   				int contS, contT, contA;
+			   				
+			   				system("cls");
+			   				
+			   				cout << "\t\t\tConsulta Inclusão Fornecedor\n\n" << endl;
+			   				mostrarIncForn(fornA, contA);
+			   				system("pause");
+			   				break;
+			   				
+			   				
+			   			case 2:
+			   				system("cls");
+			   				
+			   				cout << "\t\t\tConsulta Inclusão Produto\n\n" << endl;
+			   				
+			   				system("pause");
+			   				break;
+			   				
+			   				
+			   			case 3:
+			   				system("cls");
+			   				
+			   				cout << "\t\t\tConsulta de Estoque Mínimo\n\n" << endl;
+			   				
+			   				system("pause");
+			   				break;
+			   				
+			   				
+			   			case 4:
+			   				system("cls");
+			   				cout << "Voltando...\n\n\n";
+			   				break;
+			   				
+			   				
+			   			default:
+			   				system("cls");
+			   				cout << "Opção inválida! Informe um valor entre 1 e 4.\n\n\n";
+			   				system("pause");
+			   				al4 = 0;
+			   				break;
+					}
+			   	
+			   }
+			   al4 = 0;
 			   break; 
 			
 			
@@ -563,6 +669,7 @@ int main() {
 			default:
 				system("cls");
 			    cout << "\nOpçãoo inválida. Informe um número entre 1 e 5\n\n\n";
+			    al = 0;
 				break;
 		  }
 	   }

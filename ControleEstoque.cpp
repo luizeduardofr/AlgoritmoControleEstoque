@@ -217,7 +217,7 @@ void incFornecedor (struct Fornecedor S[], int contS, struct Fornecedor T[], int
     contA = k;
 }
 
-void mostrarInclusao (struct Fornecedor A[], int contA){
+void mostrarIncForn (struct Fornecedor A[], int contA){
     cout << "\n\nLista dos Registros no Arquivo Atualizado" << endl;
     for (int i = 0; i < contA; i++){
         cout << "\nCodigo: " << A[i].idFornecedor;
@@ -236,39 +236,43 @@ void mostrarInclusao (struct Fornecedor A[], int contA){
 //Inicio da inclusão Produto
 
 void buscaProd (struct Produto prod[], int codP);
+void buscaForn (struct Fornecedor forn[], int codF);
 
-void novoProd (struct Produto nProd[], int &contadorP){
+void novoProd (struct Fornecedor forn[], struct Produto prod[], struct Produto nProd[], int &contadorP){
 	int i =0;
 	for (int saida = 1; i < 4 && saida != 0; i++){
 		cout << "\n\nCódigo do Produto: ";
 		cin >> nProd[i].idProduto;
 		int codP;
 		codP = nProd[i].idProduto;
-		if (nProd.idProduto > 0){
+		if (codP > 0){
 		buscaProd (prod, codP);
 		cout << "Descrição: ";
 		cin.ignore(); 
-		gets(prod[i].descProd);
+		gets(nProd[i].descProd);
 		cout << "Código Tipo do Produto: ";
-		cin.ignore();
-		gets(prod[i].tipoProduto);
+		cin >> nProd[i].idTipo;
 		cout << "Código do Fornecedor: ";
-		cin >> prod[i].codFornecedor;
+		cin >> nProd[i].codFornecedor;
 		int codF;
-		codF = prod[i].codFornecedor;
-		buscaForn(forn, contF);
+		codF = nProd[i].codFornecedor;
+		buscaForn(forn, codF);
 		cout << "Quantidade do Estoque: ";
-		cin >> prod[i].qtdeEstoque;
+		cin >> nProd[i].qtdeEstoque;
 		cout << "Estoque Mínimo: ";
-		cin >> prod[i].estoqueMin;
+		cin >> nProd[i].estoqueMin;
 		cout << "Estoque Máximo: ";
-		cin >> prod[i].estoqueMax;
+		cin >> nProd[i].estoqueMax;
 		cout << "Valor Unitário: ";
-		cin >> prod[i].valorUnt;
+		cin >> nProd[i].valorUnt;
 	}
+	else 
+		saida = 0;
+  }
+  contadorP = i - 1;
 }
 
-int buscaProd (struct Produto prod[], int codP){
+int buscaProd (struct Produto prod[], int &codP){
 	int i = 0, f = 4;
 	int m = (i+f) / 2;
 	for (; f >= i && codP != prod[m].idProduto; m = (i+f)/2){
@@ -288,22 +292,85 @@ int buscaProd (struct Produto prod[], int codP){
 void buscaFornecedor (struct Fornecedor forn[], int codF){
 	int i = 0, f= 4;
 	int m = (i + f) / 2;
-	for (; f >= i && codF != forn[m].nomeFornecedor; m = (i + f) / 2){
-		if (codF > forn[m].nomeFornecedor)
+	for (; f >= i && codF != forn[m].idFornecedor; m = (i + f) / 2){
+		if (codF > forn[m].idFornecedor)
 			i = m + 1;
 		else 
 			f = m - 1;
     }
-    if (codF == forn[m].nomeFornecedor)
+    if (codF == forn[m].idFornecedor)
     	cout << "Nome do Fornecedor: " << forn[m].nomeFornecedor << endl;
 	else 
 		cout << "\nFornecedor não Encontrado" << endl;
 }
 
-void incProduto () {
-	
+void incProduto (struct Produto S[], int contS, struct Produto T[], int contT, struct Produto A[], int &contA){
+    int i = 0, j = 0, k = 0; 
+    for (;i < contS && j < contT;k++){
+        if (S[i].idProduto < T[j].idProduto){
+            A[k].idProduto = S[i].idProduto;
+            strcpy (A[k].descProd,S[i].descProd);
+            A[k].idTipo = S[i].idTipo;
+            A[k].codFornecedor = S[i].codFornecedor;
+            A[k].qtdeEstoque = S[i].qtdeEstoque;
+            A[k].estoqueMin = S[i].estoqueMin;
+            A[k].estoqueMax = S[i].estoqueMax;
+            A[k].valorUnt = S[i].valorUnt;
+            i++;
+            }
+        else {
+            A[k].idProduto = T[j].idProduto;
+            strcpy (A[k].descProd,T[j].descProd);
+            A[k].idTipo = T[j].idTipo;
+            A[k].codFornecedor = T[j].codFornecedor;
+            A[k].qtdeEstoque = T[j].qtdeEstoque;
+            A[k].estoqueMin = T[j].estoqueMin;
+            A[k].estoqueMax = T[j].estoqueMax;
+            A[k].valorUnt = T[j].valorUnt;
+            j++;
+        }
+    }
+    while (i < contS){
+            A[k].idProduto = S[i].idProduto;
+            strcpy (A[k].descProd,S[i].descProd);
+            A[k].idTipo = S[i].idTipo;
+            A[k].codFornecedor = S[i].codFornecedor;
+            A[k].qtdeEstoque = S[i].qtdeEstoque;
+            A[k].estoqueMin = S[i].estoqueMin;
+            A[k].estoqueMax = S[i].estoqueMax;
+            A[k].valorUnt = S[i].valorUnt;
+        i++;
+        k++;
+    }
+    while (j < contT){
+            A[k].idProduto = T[j].idProduto;
+            strcpy (A[k].descProd,T[j].descProd);
+            A[k].idTipo = T[j].idTipo;
+            A[k].codFornecedor = T[j].codFornecedor;
+            A[k].qtdeEstoque = T[j].qtdeEstoque;
+            A[k].estoqueMin = T[j].estoqueMin;
+            A[k].estoqueMax = T[j].estoqueMax;
+            A[k].valorUnt = T[j].valorUnt;
+        j++;
+        k++;
+    }
+    contA = k;
 }
 
+void mostrarIncProd (struct Produto A[], int contA){
+    cout << "\n\nLista dos Registros no Arquivo Atualizado" << endl;
+    for (int i = 0; i < contA; i++){
+        cout << "\nCodigo: " << A[i].idProduto;
+        cout << "Descrição: " << A[i].descProd;
+        cout << "Id Tipo: " << A[i].idTipo;
+        cout << "Id Fornecedor: " << A[i].codFornecedor;
+        cout << "Quantidade Estoque: " << A[i].qtdeEstoque;
+        cout << "Estoque Minimo: " << A[i].estoqueMin;
+        cout << "Estoque Máximo: " << A[i].estoqueMax;
+        cout << "Valor Unitário: " << A[i].valorUnt;
+    }
+    getch();
+}
 
 //Fim da inclusão Produto
 
@@ -311,11 +378,11 @@ int main() {
 	setlocale(LC_ALL,"");
 	
 	struct TipoProduto arqTipo[4];
-	struct Produto arqProd[4];
+	struct Produto arqProd[4], arqnProd[4];
 	struct Estado arqEstado[4];
-	struct Fornecedor arqForn[4], arqS[4], arqT[4], arqA[8];
+	struct Fornecedor arqForn[4];
 	
-	int contTipo, contProd, contEst, contForn, contS, contT, contA;
+	int contTipo = 0, contProd = 0, contEst = 0, contForn = 0;
 	
 	int al = 0;
 
@@ -418,33 +485,42 @@ int main() {
 			   		switch (al2)
 			   		{
 			   			case 1:
+			   				struct Fornecedor fornS[4], fornT[4], fornA[8];
+			   				int contS, contT, contA;
+			   				
 			   				system("cls");
 			   				cout << "\t\t\tInclusão de Fornecedor\n\n" << endl;
 			   				
 			   				cout << "\nLeitura Arquivo S";
-			   				novoFornecedor(arqEstado, arqS, contS);
+			   				novoFornecedor(arqEstado, fornS, contS);
 			   				system("cls");
 			   				
 			   				cout << "\nLeitura Arquivo T";
-			   				novoFornecedor(arqEstado, arqT, contT);
+			   				novoFornecedor(arqEstado, fornT, contT);
 			   				system("cls");
 			   			
-			   				incFornecedor(arqS, contS, arqT, contT, arqA, contA);
-			   				mostrarInclusao(arqA, contA);
+			   				incFornecedor(fornS, contS, fornT, contT, fornA, contA);
+			   				mostrarIncForn(fornA, contA);
 			   				system("pause");
 			   				break;
 			   				
 			   			case 2:
+			   				struct Produto prodS[4], prodT[4], prodA[8];
+			   				int contpS, contpT, contpA;
+			   				
 			   				system("cls");
 			   				cout << "\t\t\tInclusão de Produto\n\n" << endl;
 			   				
 			   				cout << "\nLeitura Arquivo S";
-			   				
+			   				novoProd (arqForn, arqProd, prodS, contpS);
 			   				system ("cls");
 			   				
 			   				cout << "\nLeitura Arquivo T";
-			   				
+			   				novoProd (arqForn, arqProd, prodT, contpT);
 			   				system("cls");
+			   				
+			   				incProduto(prodS, contpS, prodT, contpT, prodA, contpA);
+			   				mostrarIncProd (prodA, contpA);
 			   				break;
 			   				
 			   			case 3:

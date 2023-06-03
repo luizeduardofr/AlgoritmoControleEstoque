@@ -641,11 +641,9 @@ int main() {
 			   				al4 = 0;
 			   				break;
 					}
-			   	
-			   }
-			   al4 = 0;
-			   break; 
-			
+			   	al4 = 0;
+			    break; 
+			   }			
 			
 			case 5:  
 			   system("cls");

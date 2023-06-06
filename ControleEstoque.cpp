@@ -158,7 +158,7 @@ void novoFornecedor (struct Estado est[], struct Fornecedor forn[], int &contado
 }
 
 void buscaEstado (struct Estado est[], int codE){
-	int i = 0, f= 8;
+	int i = 0, f = 4 ;
 	int m = (i + f) / 2;
 	for (; f >= i && codE != est[m].codUF; m = (i + f) / 2){
 		if (codE > est[m].codUF)
@@ -230,8 +230,7 @@ void mostrarIncForn (struct Fornecedor A[], int &contA){
         cout << "\nTelefone: " << A[i].telefone;
         cout << "\nCidade: " << A[i].cidade;
         cout << "\nUF: " << A[i].idUF;
-        cout << "\nCNPJ: " << A[i].cnpj;
-        cout << "\n\n";
+        cout << "\nCNPJ: " << A[i].cnpj << endl;
     }
 }
 
@@ -283,8 +282,8 @@ void novoProd (struct Fornecedor forn[], struct Produto prod[], struct Produto n
 }
 
 void buscaProduto (struct Produto prod[], int &codP){
-	int i = 0, f = 8;
-	int m = (i+f) / 2;
+	int i = 0, f = 4;
+	int m = (i + f) / 2;
 	for (; f >= i && codP != prod[m].idProduto; m = (i+f)/2){
 		if (codP > prod[m].idProduto)
 			i = m + 1;
@@ -299,7 +298,7 @@ void buscaProduto (struct Produto prod[], int &codP){
 }
 
 void buscaFornecedor (struct Fornecedor forn[], int &codF){
-	int i = 0, f = 8;
+	int i = 0, f = 4;
 	int m = (i + f) / 2;
 	for (; f >= i && codF != forn[m].idFornecedor; m = (i + f) / 2){
 		if (codF > forn[m].idFornecedor)
@@ -376,8 +375,7 @@ void mostrarIncProd (struct Produto A[], int &contA){
         cout << "\nQuantidade Estoque: " << A[i].qtdeEstoque;
         cout << "\nEstoque Minimo: " << A[i].estoqueMin;
         cout << "\nEstoque Máximo: " << A[i].estoqueMax;
-        cout << "\nValor Unitário: " << A[i].valorUnt;
-        cout << "\n\n";
+        cout << "\nValor Unitário: " << A[i].valorUnt << endl;
     }
 }
 
@@ -414,7 +412,7 @@ void buscaVendaTipo (struct TipoProduto tipo[], int codT){
 	}
 	
 	if (codT == tipo[m].idTipo)
-		cout << "Descrição Tipo do Produto: " << tipo[m].descTipo;
+		cout << "Descrição Tipo do Produto: " << tipo[m].descTipo << endl;
 }
 
 
@@ -437,40 +435,42 @@ void validarVenda (struct Produto prod[], struct TipoProduto tipo[], struct Forn
 	}
 }
 
-void buscadeVenda (struct Produto prod[], int codigo, int &qtde){
+void buscadeVenda (struct Produto prod[], int cod, int &qtde){
 	char conf;
 	int i = 0, f = 4;
 	int m = (i + f) / 2;
-	for (; f >= i && codigo != prod[m].idProduto; m = (i + f) / 2){
-		if (codigo > prod[m].idProduto)
+	for (; f >= i && cod != prod[m].idProduto; m = (i + f) / 2){
+		if (cod > prod[m].idProduto)
 			i = m + 1;
 		else 
 			f = m - 1;
 	}
 	
-	if (codigo == prod[m].idProduto){
+	if (cod == prod[m].idProduto){
 		
 		if (qtde > prod[m].qtdeEstoque){
 			cout << "\n\nQuantidade desejada, indisponivel no Estoque. ";
 			f = 5;
-			getch();
+			system("pause");
 		}
-		
-		cout << "\n\nValor total da Venda: " << qtde * prod[m].valorUnt << " reias.";
-		cout << "\n\nDeseja Confirmar? (S/N): ";
+		else{
+		cout << "\n\nValor total da Venda: " << qtde * prod[m].valorUnt << " reias." << endl;
+		cout << "\n\n\nDeseja Confirmar? (S/N): ";
 		cin >> conf;
 		conf = toupper(conf);
 			
 			system("cls");
 			if (conf == 'S'){
 				cout << "\nVenda Concluida." << endl;
+				
 				prod[m].qtdeEstoque = prod[m].qtdeEstoque - qtde;
-				cout << "\nEstoque atualizado para: " << prod[m].qtdeEstoque;
+				cout << "\nEstoque atualizado para: " << prod[m].qtdeEstoque << endl;
 			}
 			
 			else 
-				cout << "\n\nNão foi possível concluir a Venda!!";
-	}
+				cout << "\n\nNão foi possível concluir a Venda!!" << endl;
+	 }
+   }
 }
 
 //Fim Venda
@@ -478,7 +478,7 @@ void buscadeVenda (struct Produto prod[], int codigo, int &qtde){
 //Inicio Mostrar
 
 void buscaProdEstoque (struct Produto prod[], int &codP){
-	int i = 0, f = 8;
+	int i = 0, f = 4;
 	int m = (i + f) / 2; 
 	for (; f >= i && codP != prod[m].idProduto; m = (i + f) / 2){
 		if (codP > prod[m].idProduto)
@@ -501,7 +501,7 @@ void buscaProdEstoque (struct Produto prod[], int &codP){
 void buscaFornEstoque (struct Fornecedor forn[], int codF);
 
 void buscaEstoqueBx (struct Fornecedor forn[], struct Produto prod[]){
-	for (int i = 0; i < 8; i++){
+	for (int i = 0; i < 4; i++){
 		if (prod[i].qtdeEstoque < prod[i].estoqueMin){
 			cout << "\n\nProduto abaixo do Estoque Minimo" << endl;
 			
@@ -511,7 +511,7 @@ void buscaEstoqueBx (struct Fornecedor forn[], struct Produto prod[]){
 			cout << "Id Fornecedor: " << prod[i].codFornecedor << endl;
 			cout << "Quantidade Estoque: " << prod[i].qtdeEstoque << endl;
 			cout << "Estoque Minimo: " << prod[i].estoqueMin << endl;
-			cout << "\nEstoque Máximo: " << prod[i].estoqueMax << endl;
+			cout << "Estoque Máximo: " << prod[i].estoqueMax << endl;
 			cout << "Quantidade a ser comprada: " << prod[i].estoqueMax - prod[i].estoqueMin << endl;
 			cout << "Valor da compra: " << (prod[i].estoqueMax - prod[i].estoqueMin) * prod[i].valorUnt << " reais." << endl;
 			
@@ -521,7 +521,7 @@ void buscaEstoqueBx (struct Fornecedor forn[], struct Produto prod[]){
 }
 
 void buscaFornEstoque (struct Fornecedor forn[], int codF){
-	int i = 0, f = 8;
+	int i = 0, f = 4;
 	int m = (i + f) / 2;
 	for (; f >= i && codF != forn[m].idFornecedor; m = (i + f) / 2){
 		if (codF > forn[m].idFornecedor)
@@ -544,7 +544,7 @@ int main() {
 	setlocale(LC_ALL,"");
 	
 	struct TipoProduto arqTipo[4];
-	struct Produto arqProd[4], arqnProd[4];
+	struct Produto arqProd[4];
 	struct Estado arqEstado[4];
 	struct Fornecedor arqForn[4];
 	
@@ -728,6 +728,7 @@ int main() {
 			  	case 1:
 			  		system("cls");
 			  		int contVenda;
+			  		
 			  		validarVenda (arqProd, arqTipo, arqForn, contVenda);
 			  		system("pause");
 			  		break;

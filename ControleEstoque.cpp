@@ -431,7 +431,10 @@ void validarVenda (struct Produto prod[], struct TipoProduto tipo[], struct Forn
 		int qtde;
 		cout << "\n\nInforme a quantidade a ser vendida: ";
 		cin >> qtde;
-		buscadeVenda(prod, codVenda, qtde);
+		if (qtde > 0)
+			buscadeVenda(prod, codVenda, qtde);
+		else 
+			cout << "\n\nQuantidade incorreta. Volte ao menu e digite corretamente!!" << endl;
 	}
 }
 
@@ -500,23 +503,26 @@ void buscaProdEstoque (struct Produto prod[], int &codP){
 
 void buscaFornEstoque (struct Fornecedor forn[], int codF);
 
-void buscaEstoqueBx (struct Fornecedor forn[], struct Produto prod[]){
-	for (int i = 0; i < 4; i++){
+void buscaEstoqueBx (struct Fornecedor forn[], struct Produto prod[], int contadorP, int contadorF){
+	for (int i = 0; i < contadorP; i++){
 		if (prod[i].qtdeEstoque < prod[i].estoqueMin){
-			cout << "\n\nProduto abaixo do Estoque Minimo" << endl;
+			cout << "\nProduto abaixo do Estoque Minimo" << endl;
 			
 			cout << "Id do produto: " << prod[i].idProduto << endl;
 			int codP = prod[i].idProduto;
+			cout << "Descrição do Produto: " << prod[i].descProd << endl;
 			cout << "Id Tipo: " << prod[i].idTipo << endl;
 			cout << "Id Fornecedor: " << prod[i].codFornecedor << endl;
 			cout << "Quantidade Estoque: " << prod[i].qtdeEstoque << endl;
 			cout << "Estoque Minimo: " << prod[i].estoqueMin << endl;
 			cout << "Estoque Máximo: " << prod[i].estoqueMax << endl;
-			cout << "Quantidade a ser comprada: " << prod[i].estoqueMax - prod[i].estoqueMin << endl;
-			cout << "Valor da compra: " << (prod[i].estoqueMax - prod[i].estoqueMin) * prod[i].valorUnt << " reais." << endl;
+			cout << "Quantidade a ser comprada: " << prod[i].estoqueMax - prod[i].qtdeEstoque << endl;
+			cout << "Valor da compra: " << (prod[i].estoqueMax - prod[i].qtdeEstoque) * prod[i].valorUnt << " reais." << endl;
 			
 			buscaFornEstoque(forn, codP);
 		}
+		else {
+			cout << "\n\nNenhum produto com estoque baixo!!" << endl;}
 	}
 }
 
@@ -783,7 +789,7 @@ int main() {
 			   			case 2:
 			   				system("cls");
 			   				cout << "\t\t\tConsulta de Estoque Mínimo\n\n" << endl;
-			   				buscaEstoqueBx(arqForn, arqProd);
+			   				buscaEstoqueBx(arqForn, arqProd, contProd, contForn);
 			   				system("pause");
 			   				break;
 			   				

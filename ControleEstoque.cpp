@@ -397,6 +397,8 @@ void buscaVendaProd (struct Produto prod[], int codP){
 	if (codP == prod[m].idProduto){
 		cout << "Descrição do Produto: " << prod[m].descProd << endl;
 		cout << "Quantidade em Estoque: " << prod[m].qtdeEstoque << endl;
+		cout << "Estoque Minimo: " << prod[m].estoqueMin << endl;
+		cout << "Estoque Máximo: " << prod[m].estoqueMax << endl;		
 		cout << "Valor Unitário: " << prod[m].valorUnt << endl;
    }
 }
@@ -491,9 +493,12 @@ void buscaProdEstoque (struct Produto prod[], int &codP){
 	}
 	
 	if (codP == prod[m].idProduto){
+		cout << "Descrição: " << prod[m].descProd << endl;
 		cout << "Id Tipo: " << prod[m].idTipo << endl;
 		cout << "Id Fornecedor: " << prod[m].codFornecedor << endl;
-		cout << "Quantidade Estoque: " << prod[m].qtdeEstoque << endl;	
+		cout << "Quantidade Estoque: " << prod[m].qtdeEstoque << endl;
+		cout << "Estoque Minimo: " << prod[m].estoqueMin << endl;
+		cout << "Estoque Máximo: " << prod[m].estoqueMax << endl;
 		cout << "Valor Unitário: " << prod[m].valorUnt << endl;
 		cout << "Valor em Estoque: " << prod[m].qtdeEstoque * prod[m].valorUnt << endl;	
 	}
